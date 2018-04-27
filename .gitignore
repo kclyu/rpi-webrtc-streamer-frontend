@@ -1,0 +1,12 @@
+browsers*
+.eslintcache
+.eslintrc.js
+node_modules
+validation-report.json
+validation-status.json
+web/.firebaserc
+backup*
+# private config or information
+firebase_config.json
+client_secret.json
+proxy-config.json

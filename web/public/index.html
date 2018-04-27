@@ -1,0 +1,254 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/4.10.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/4.10.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/4.10.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/4.10.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/4.10.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script src="scripts/common.js"></script>
+    <script src="scripts/sdputils.js"></script>
+    <script src="scripts/peerconnection_client.js"></script>
+    <script src="scripts/firebase_signaling.js"></script>
+    <script src="scripts/devicetable.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <style>
+        .demo-header-image {
+            background: url('./images/raspberry-pi-background-4.jpg') center / cover;
+            color: black;
+        }
+        .demo-body-image {
+            background: url('./images/rasberry-pi-2b-background-2.jpg') center / cover;
+        }
+    </style>
+
+  </head>
+
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="demo-header-image mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+            <h3>WebRTC Streamer for Raspberry PI</h3>
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+            <a href="#overview" class="mdl-layout__tab">Overview</a>
+            <a href="#devices" class="mdl-layout__tab is-active">Devices</a>
+            <a href="#setup" class="mdl-layout__tab">Setup</a>
+            <a href="#faq" class="mdl-layout__tab">FAQ</a>
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+          <button id="sign-out" class="mdl-button mdl-js-button mdl-button mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent">
+            <i class="material-icons" role="presentation">account_circle</i>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="demo-body-image mdl-layout__content">
+
+        <div class="mdl-layout__tab-panel" id="overview">
+        <!-- overview -->
+        </div>
+
+
+        <div class="mdl-layout__tab-panel is-active" id="devices">
+          <section class="section--center mdl-grid mdl-grid--no-spacing">
+            <div class="mdl-cell mdl-cell--12-col">
+              <h4>Devices List</h4>
+
+              <table id="device_table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                  <thead>
+                      <tr>
+                          <th class="mdl-data-table__cell--non-numeric">Title</th>
+                          <th>Description</th>
+                          <th>Connection</th>
+                          <th>View</th>
+                      </tr>
+                  </thead>
+                  <tbody id="device_table_body">
+                      <!-- The rows values in the device table are updated with the contents registered in the database. -->
+                  </tbody>
+              </table>
+
+            </div>
+          </section>
+        </div>
+
+<template id="device_list_tmpl">
+    <tr>
+    <td id="title" class="mdl-data-table__cell--non-numeric">TMPL_TITLE</td>
+    <td id="description">TMPL_DESCRIPTION</td>
+    <td id="state">TMPL_STATE</td>
+    <td>
+    <button id="button" class="mdl-button mdl-js-button mdl-button--raised" onclick=ShowDialogBox("TMPL_DEVICEID")>Connect</button>
+    </td>
+    </tr>
+</template>
+
+        <div class="mdl-layout__tab-panel" id="devices">
+        <!-- devices -->
+        </div>
+        <div class="mdl-layout__tab-panel" id="setup">
+        <!-- setup -->
+        </div>
+        <div class="mdl-layout__tab-panel" id="faq">
+        <!-- faq -->
+        </div>
+
+    <style>
+
+.mdl-dialog {
+  border: none;
+  box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
+  width: 664; 
+  height: 600px; 
+}
+
+  .mdl-dialog__title {
+    padding: 24px 24px 0;
+    margin: 0;
+    font-size: 2.5rem; }
+  .mdl-dialog__actions {
+    padding: 8px 8px 8px 24px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap; }
+
+    .mdl-dialog__actions > * {
+      margin-right: 8px;
+      height: 36px; }
+      .mdl-dialog__actions > *:first-child {
+        margin-right: 0; }
+    .mdl-dialog__actions--full-width {
+      padding: 0 0 8px 0; }
+      .mdl-dialog__actions--full-width > * {
+        height: 48px;
+        -webkit-flex: 0 0 100%;
+            -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
+        padding-right: 16px;
+        margin-right: 0;
+        text-align: right; }
+
+  .mdl-dialog__content {
+    padding: 20px 24px 24px 24px;
+    color: rgba(0,0,0, 0.54); }
+
+.dialog-video__align-center { 
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0 auto; 
+    width: 640; 
+    display: block
+}
+    </style>
+
+      <div>
+  <dialog class="mdl-dialog">
+            <div class="mdl-card__title">
+                <h5 class="mdl-card__title-text">Remote Video</h5>
+            </div>
+            <div class="mdl-card__media">
+                <video class="dialog-video__align-center" id="remoteVideo" autoplay playsinline controls muted 
+                    border="1" alt=""></video> 
+            </div>
+            <div class="mdl-card__actions">
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="close">Close</button>
+            </div>
+  </dialog>
+    </div>
+
+<script>
+    var dialog = document.querySelector('dialog');
+    var ShowDialogBox = function ( data ) {
+        trace('Start firebase signnaling channel for ' + data );
+        if (! dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        dialog.showModal();
+        var remoteVideoElement = document.getElementById("remoteVideo");
+        trace('Creating firebase signnaling channel for ' + data );
+        window.firebase_signaling_channel_ = new FirebaseSignalingChannel(data, remoteVideo );
+        window.firebase_signaling_channel_.doSignalingConnect();
+    };
+
+    var ClosingDialogBox = function () {
+        trace('dialog box closing.');
+        if( window.firebase_signaling_channel_ !== undefined &&  
+                window.firebase_signaling_channel_ !== null ) {
+            window.firebase_signaling_channel_.doSignalingDisconnnect();
+            window.firebase_signaling_channel_ = null;
+        }
+    }
+
+    dialog.addEventListener('close', function() {
+        trace('dialog closed');
+        ClosingDialogBox();
+    });
+    dialog.addEventListener('cancel', function() {
+        trace('dialog canceled');
+        ClosingDialogBox();
+    });
+
+    document.getElementById('close').addEventListener('click', function() {
+        dialog.close();
+    });
+
+</script>
+
+        <footer class="mdl-mega-footer">
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

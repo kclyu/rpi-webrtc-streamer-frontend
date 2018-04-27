@@ -1,0 +1,8 @@
+{
+  "name": "Rpi WebRTC Streamer",
+  "short_name": "RWS",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "gcm_sender_id": "230441514026"
+}

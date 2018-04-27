@@ -1,0 +1,36 @@
+{
+  "name": "rws-firebase-proxy",
+  "version": "0.73.0",
+  "description": "Rpi WebRTC Stramer Firebase Proxy module",
+  "main": "firebase-client.js",
+  "scripts": {
+    "start": "node rws-proxy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kclyu/rpi-webrtc-streamer-firebase.git"
+  },
+  "keywords": [
+    "rpi-webrtc-streamer",
+    "webrtc",
+    "webrtc-firebase-signaling",
+    "rws-firebase-proxy",
+    "firebase"
+  ],
+  "author": "Lyu, KeunChang",
+  "license": "BSD-3-Clause-No-Nuclear-Warranty",
+  "bugs": {
+    "url": "https://github.com/kclyu/rpi-webrtc-streamer-firebase/issues"
+  },
+  "homepage": "https://github.com/kclyu/rpi-webrtc-streamer-firebase#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "commander": "^2.15.1",
+    "firebase": "^4.11.0",
+    "googleapis": "^27.0.0",
+    "nconf": "^0.10.0",
+    "string-template": "^1.0.0",
+    "winston": "^2.4.1",
+    "ws": "^5.1.0"
+  }
+}

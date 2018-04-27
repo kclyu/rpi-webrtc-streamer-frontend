@@ -1,0 +1,8 @@
+{
+    "apiKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "authDomain": "firebase-project-name.firebaseapp.com",
+    "databaseURL": "https://firebase-project-name.firebaseio.com",
+    "projectId": "firebase-project-name",
+    "storageBucket": "firebase-project-name.appspot.com",
+    "messagingSenderId": "00000000000000"
+}

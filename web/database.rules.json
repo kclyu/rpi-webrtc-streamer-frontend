@@ -1,0 +1,32 @@
+{
+  "rules": {
+        "devices" : {
+          "$uid" : {
+            // permission to make device list query 
+            ".read":  "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+          	".write": "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+            
+      }
+    },
+    "messages" : {
+      "$uid" : {
+        "$deviceid" : {
+          ".read":  "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+          ".write": "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()"
+        } 
+      }
+    },
+    "users" : {
+      "$uid" : {
+          ".read":  "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+          ".write": "$uid == auth.uid ||
+               root.child('users').child('group').child($uid).child(auth.uid).exists()"
+      }
+    }
+  }
+}
