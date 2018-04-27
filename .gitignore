@@ -10,3 +10,4 @@ backup*
 firebase_config.json
 client_secret.json
 proxy-config.json
+*.log
