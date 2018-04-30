@@ -9,5 +9,5 @@ backup*
 # private config or information
 firebase_config.json
 client_secret.json
-proxy-config.json
+proxy_config.json
 *.log

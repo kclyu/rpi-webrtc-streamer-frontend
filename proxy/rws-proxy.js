@@ -39,7 +39,7 @@ let rws_config_filenam;
 if( commander.configFile === undefined ) {
     // using default rws-config file in the 'etc' directory
     console.log('Config-File option not specified.');
-    rws_config_filenam = './etc/proxy-config.json';
+    rws_config_filenam = './etc/proxy_config.json';
 } else {
     console.log('Config-File option specified : ' + commander.configFile );
     rws_config_filenam = commander.configFile;
@@ -83,7 +83,7 @@ else if( config_.auth_type == 'google-auth' ) {
     logger.error('Not supported Google Auth OAuth2');
 }
 else {
-    logger.error('Not supported auth type in proxy-config.json :' + config_.auth_type);
+    logger.error('Not supported auth type in proxy_config.json :' + config_.auth_type);
 }
 
 
