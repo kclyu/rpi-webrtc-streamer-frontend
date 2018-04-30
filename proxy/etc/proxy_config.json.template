@@ -1,0 +1,16 @@
+{
+    "config" : {
+        "auth_type" : "email-password",
+        "firebase_client_config_file": "etc/firebase_config.json",
+        "firebase_message_timeout" : 10000
+    },
+    "email-password" : {
+        "email": "your-frontend-email-id",
+        "password" : "your-frontend-email-id-password"
+    },
+    "local-device-config" : {
+        "url": "ws://127.0.0.1:8889/rws/ws",
+        "title": "Livinging Room",
+        "description": ""
+    }
+}
