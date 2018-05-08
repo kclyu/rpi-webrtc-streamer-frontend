@@ -1,20 +1,4 @@
 <!doctype html>
-<!--
-  Material Design Lite
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -48,7 +32,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css">
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/login.css">
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/4.10.1/firebase-app.js"></script>
@@ -91,51 +74,58 @@
       <main class="demo-body-image mdl-layout__content">
 
       <div>
-  <dialog class="mdl-dialog remove-padding">
+
+  <dialog class="mdl-dialog" id='login-dialog'>
         <div class="mdl-card mdl-shadow--6dp">
 			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
 				<h2 class="mdl-card__title-text">Login</h2>
-			</div>
-	  	        <div class="mdl-card__supporting-text">
-				<form action="#">
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-						<input class="mdl-textfield__input" type="email" id="email" />
-						<label class="mdl-textfield__label" for="email">Email</label>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <form action="#">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" id="email" />
+                        <label class="mdl-textfield__label" for="email">Email</label>
                         <span class="mdl-textfield__error">Input is not an email address format!</span>
-					</div>
-					<div class="mdl-textfield mdl-js-textfield is-dirty is-invalid">
-						<input class="mdl-textfield__input" type="password" id="userpass"/>
-						<label class="mdl-textfield__label" for="userpass">Password</label>
-					</div>
-				</form>
-			</div>
-			<div class="mdl-card__actions mdl-card--border">
-				<button id="sign-in-button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign In </button>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield is-dirty is-invalid">
+                        <input class="mdl-textfield__input" type="password" id="userpass"/>
+                        <label class="mdl-textfield__label" for="userpass">Password</label>
+                    </div>
+                </form>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+				<button id="sign-in-button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign In</button>
                         <span class="mdl-textfield__error">error string</span>
 			</div>
 		</div>
   </dialog>
+
+
+  <dialog class="mdl-dialog remove-padding" id='email-verification-dialog'>
+        <div class="mdl-card mdl-shadow--6dp">
+			<div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+				<h2 class="mdl-card__title-text">Email Verification</h2>
+			</div>
+            <div class="mdl-card__supporting-text">
+                <p>
+                Your email address has not been verified yet. Please confirm your address.
+                </p>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+				<button id="email-verification-confirm" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">OK</button>
+			</div>
+		</div>
+  </dialog>
+
     </div>
 
 <script type="text/javascript">
-    var dialog = document.querySelector('dialog');
-    var showDialogButton = document.querySelector('#show-dialog');
-    if (! dialog.showModal) {
-      dialogPolyfill.registerDialog(dialog);
-    }
-    dialog.showModal();
 
-document.getElementById('userpass').addEventListener('keypress', function(e) {
-    if(e.keyCode === 13) {
-        e.preventDefault();
-        toggleSignIn();
-    }
-});
 
     /**
      * Handles the sign in button press.
      */
-    function toggleSignIn() {
+    function doSignIn() {
         if (firebase.auth().currentUser) {
             firebase.auth().signOut();
         } else {
@@ -152,7 +142,6 @@ document.getElementById('userpass').addEventListener('keypress', function(e) {
             // Sign in with email and pass.
             firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
                 trace('Login success!');
-                window.location.href="index.html";
             }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -174,39 +163,102 @@ document.getElementById('userpass').addEventListener('keypress', function(e) {
      *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
      *    out, and that is where we update the UI.
      */
-    function initApp() {
-      // Listening for auth state changes.
-      firebase.auth().onAuthStateChanged(function(user) {
+function initApp() {
+    // Listening for auth state changes.
+    firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          // User is signed in.
-          var displayName = user.displayName;
-          var email = user.email;
-          var emailVerified = user.emailVerified;
-          var photoURL = user.photoURL;
-          var isAnonymous = user.isAnonymous;
-          var uid = user.uid;
-          var providerData = user.providerData;
-          trace('Display Name: '  +  user.displayName );
-          trace('email: '  +  user.email );
-          trace('emailVerified: '  +  user.emailVerified );
-          trace('photoURL: '  +  user.photoURL );
-          trace('uid: '  +  user.uid );
-          trace('Already SignedIn!');
-          window.location.href="index.html";
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var providerData = user.providerData;
+            trace('Display Name: '  +  user.displayName );
+            trace('email: '  +  user.email );
+            trace('emailVerified: '  +  user.emailVerified );
+            trace('User Id: '  +  user.uid  + ' Signed In');
+
+            if( emailVerified == false ) {
+                user.sendEmailVerification().then(function() {
+                    // Email sent.
+                    trace('Verification email sent. : ' + user.email);
+                }).catch(function(error) {
+                    // An error happened.
+                    trace('Error in sending verification email : ' + user.email);
+                });
+                showEmailVerificationDialog();
+            } else {
+                // no need to verify email, moving to main page
+                window.location.href="index.html";
+            }
         } else {
-          trace('User Signed Out');
+            trace('User Signed out state');
+            showLoginDialog();
         }
-      });
-      // [END authstatelistener]
+    });
+}
 
-      document.getElementById('sign-in-button').addEventListener('click', toggleSignIn, false);
+function showLoginDialog() {
+    window.login_dialog = document.getElementById('login-dialog');
+    document.getElementById('sign-in-button').addEventListener('click', doSignIn, false);
+    document.getElementById('userpass').addEventListener('keypress', function(e) {
+        if(e.keyCode === 13) {
+            e.preventDefault();
+            doSignIn();
+        }
+    });
+    if (! window.login_dialog.showModal) {
+        dialogPolyfill.registerDialog(window.login_dialog);
     }
+    window.login_dialog.addEventListener('close', function(e) {
+        e.preventDefault();
+        trace('login dialog closed');
+    });
+    window.login_dialog.addEventListener('cancel', function(e) {
+        e.preventDefault();
+        trace('blocking login dialog cancel');
+    });
+    window.login_dialog.showModal();
+}
 
-    window.onload = function() {
-      initApp();
-    };
+function showEmailVerificationDialog() {
+    window.email_dialog = document.getElementById('email-verification-dialog');
+    document.getElementById('email-verification-confirm').addEventListener('click', function(e) {
+        // checking email verified
+        e.preventDefault();
+        firebase.auth().currentUser.reload().then(function() {
+            var user = firebase.auth().currentUser;
+            // reloading user info
+            if (user != null && user.emailVerified == true) {
+                trace('email verified');
+                // email is verified, moving to main page
+                window.location.href="index.html";
+            } else {
+                trace('email is not verified');
+            }
+        }).catch(function(error) {
+            // An error happened.
+            trace('Error in reload user info');
+        });
+    });
+    window.email_dialog.addEventListener('close', function(e) {
+        e.preventDefault();
+        trace('login dialog closed');
+    });
+    window.email_dialog.addEventListener('cancel', function(e) {
+        e.preventDefault();
+        trace('blocking email verification dialog cancel');
+    });
+    if (! window.email_dialog.showModal) {
+        dialogPolyfill.registerDialog(window.email_dialog);
+    }
+    window.email_dialog.showModal();
+}
+
+window.onload = function() {
+    initApp();
+};
+
 </script>
-
 
       </main>
     </div>

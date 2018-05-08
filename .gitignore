@@ -2,6 +2,7 @@ browsers*
 .eslintcache
 .eslintrc.js
 node_modules
+package-lock.json
 validation-report.json
 validation-status.json
 web/.firebaserc
