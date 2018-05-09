@@ -230,8 +230,9 @@ function showEmailVerificationDialog() {
             // reloading user info
             if (user != null && user.emailVerified == true) {
                 trace('email verified');
-                // email is verified, moving to main page
-                window.location.href="index.html";
+                firebase.auth().signOut();
+                location.reload(true);
+                window.location.href="login.html";
             } else {
                 trace('email is not verified');
             }

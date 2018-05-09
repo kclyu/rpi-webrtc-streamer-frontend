@@ -65,7 +65,7 @@ module.exports  = class FirebaseClientEmail {
         }  else {
             logger.info('AuthStatueChanged User : SignOut');
             if( this.uid_  ) {
-                this.deinitFirebaseClient().bind(this);
+                this.unInitFirebaseClient();
             };
         };
     }
@@ -202,7 +202,7 @@ module.exports  = class FirebaseClientEmail {
     }
 
 
-    deinitFirebaseClient () {
+    unInitFirebaseClient () {
         this.deviceId_ = null;
         this.app_client_ =  null;
         this.messagesRef_.off();

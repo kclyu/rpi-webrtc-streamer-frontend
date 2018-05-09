@@ -1,32 +1,34 @@
 {
-  "rules": {
-        "devices" : {
-          "$uid" : {
-            // permission to make device list query 
-            ".read":  "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()",
-          	".write": "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()",
-            
+  "rules": {    // Only auth-enabled and email_verified users can read
+    "devices" : {
+      "$uid" : {
+          // Only users whose uid is the same as or belong to group can read and write
+          ".read": "(auth != null && auth.token.email_verified === true) && ($uid == auth.uid ||
+             root.child('users').child('group').child($uid).child(auth.uid).exists())",
+          ".write": "$uid == auth.uid ||
+             root.child('users').child('group').child($uid).child(auth.uid).exists()"
       }
     },
     "messages" : {
       "$uid" : {
         "$deviceid" : {
-          ".read":  "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+          // Only users whose uid is the same as or belong to group can read and write
+          ".read": "(auth != null && auth.token.email_verified === true) && ($uid == auth.uid ||
+             root.child('users').child('group').child($uid).child(auth.uid).exists())",
           ".write": "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()"
-        } 
+             root.child('users').child('group').child($uid).child(auth.uid).exists()"
+        }
       }
     },
     "users" : {
       "$uid" : {
-          ".read":  "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()",
+          // Only users whose uid is the same as or belong to group can read and write
+          ".read": "(auth != null && auth.token.email_verified === true) && ($uid == auth.uid ||
+             root.child('users').child('group').child($uid).child(auth.uid).exists())",
           ".write": "$uid == auth.uid ||
-               root.child('users').child('group').child($uid).child(auth.uid).exists()"
+             root.child('users').child('group').child($uid).child(auth.uid).exists()"
       }
     }
   }
 }
+
